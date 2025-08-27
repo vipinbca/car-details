@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>car dash board</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+    <section class="flex">
+        <!-- enter details section -->
+        <form class="w-130 mx-auto bg-black p-5 m-5 rounded">
+            <h1 class="text-blue-500 text-center text-2xl text-bold py-5">Enter Details</h1>
+            <div class="mb-5">
+                <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Car Brand</label>
+                <input type="text" id="carbrand"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="enter car name" required />
+            </div>
+            <div class="mb-5">
+                <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+                <input type="number" id="carprice"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="enter the price" required />
+            </div>
+            <div class="mb-5">
+                <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Key</label>
+                <input type="number" id="carkey"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="enter the key" required />
+            </div>
+            <button type="button"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full w-100 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                onclick="store()">Store records</button>
+
+        </form>
+        <!-- retrieve section -->
+        <form class="w-100 mx-auto bg-black p-5 m-5 rounded">
+            <h1 class="text-blue-500 text-center text-2xl text-bold py-5">Enter Key to retrieve item</h1>
+            <div class="mb-5">
+                <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Key
+                </label>
+                <input type="number" id="searchkey"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="key to retrieve" required />
+            </div>
+            <button type="button"
+                class="text-white bg-blue-700 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full w-80 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-green-700 dark:focus:ring-blue-800"
+                onclick="search()">retrieve records</button>
+            <div id="searchResult" class="mt-4 text-gray-700 dark:text-gray-300 text-sm"></div>
+        </form>
+        <!-- delete section -->
+        <form class="w-100 mx-auto bg-black p-5 m-5 rounded">
+            <h1 class="text-blue-500 text-center text-2xl text-bold py-5">Enter Key to delete item</h1>
+            <div class="mb-5">
+                <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">key
+                </label>
+                <input type="number" id="removekey"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="key to delete" required />
+            </div>
+            <button type="button"
+                class=" text-white bg-blue-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full w-80 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-yellow-300 dark:focus:ring-blue-800"
+                onclick="remove()">remove records</button>
+            <div id="removeResult" class="mt-4 text-gray-700 dark:text-gray-300 text-sm"></div>
+        </form>
+    </section>
+    <!-- remove all records button  -->
+    <button type="button"
+        class="ml-40 mt-20 text-white bg-blue-700 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-300 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-red-600 dark:focus:ring-blue-800"
+
+        onclick="removeAll()">remove all records</button>
+    <div id="removeAllResult" class="mt-4 text-gray-700 dark:text-gray-300 text-sm"></div>
+    <script>
+
+        function store() {
+            const carDetails = {
+                carBrand: carbrand.value,
+                carPrice: carprice.value,
+                carKey: carkey.value
+            };
+
+            if (carDetails.carBrand == "" || carDetails.carPrice == "" || carDetails.carKey == "") {
+                alert("Please fill the form");
+            } else {
+                if (localStorage.getItem(carDetails.carKey)) {
+                    alert("Car already exists..");
+                } else {
+                    localStorage.setItem(carDetails.carKey, JSON.stringify(carDetails));
+                    alert("Records added successfully");
+                }
+            }
+        }
+
+        function search() {
+            let searchKey = searchkey.value;
+            let searchResult = document.getElementById('searchResult');
+
+            if (localStorage.getItem(searchKey)) {
+                let cars = JSON.parse(localStorage.getItem(searchKey));
+                searchResult.innerHTML = `<div class="p-4 border rounded-lg bg-gray-50 dark:bg-gray-700 shadow">
+            <p><strong>Car :</strong> ${cars.carBrand}</p>
+            <p><strong>Price:</strong> ${cars.carPrice}</p>
+            <p><strong>Key:</strong> ${cars.carKey}</p>
+        </div>`;
+            } else {
+                searchResult.innerHTML = `<div class="p-4 border rounded-lg bg-gray-50 dark:bg-gray-700 shadow">
+            <p><strong>Car Not Found</strong></p>
+        </div>`;
+            }
+        }
+
+
+        function remove() {
+            let removeKey = removekey.value;
+            let removeResult = document.getElementById('removeResult');
+
+            if (localStorage.getItem(removeKey)) {
+                localStorage.removeItem(removeKey);
+                alert("Record deleted successfully");
+                removeResult.innerHTML = `<div class="p-4 border rounded-lg bg-gray-50 dark:bg-gray-700 shadow">
+                <p><strong>Record with key ${removeKey} deleted.</strong></p>
+                </div>`;
+            } else {
+                removeResult.innerHTML = `<div class="p-4 border rounded-lg bg-gray-50 dark:bg-gray-700 shadow">
+                <p><strong>No record found with that key</strong></p>`
+                
+            }
+        }
+        function removeAll() {
+            localStorage.clear();
+            alert("All records have been deleted");
+            document.getElementById('removeAllResult').innerHTML = "";
+        }
+
+    </script>
+</body>
+
+</html>
